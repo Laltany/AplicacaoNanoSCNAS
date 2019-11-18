@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- Tipos principais -->
+<center><h1 class="display-4">NanoSCNAS</h1></center>
+
+
+
+
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link active " >Knowledge Area</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="{%url 'Periodic'%}" >Periodic</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{%url 'Event'%}">Event</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{%url 'PGP'%}">PGP</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="{%url 'Geographic'%}">Geographic</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Intitution</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item " href="{%url 'HEI'%}">High Education</a>
+          <a class="dropdown-item" href="{%url 'ResearchInstitution'%}">Research</a>
+    </div>
+  </li>
+</ul>
+
+<center>
+
+    <form  action="" method="post">
+        <br>
+        <div class="row">
+            <div class="col order-last">
+              <h5 class="text-muted">Other Information</h5>
+                    {{ other.as_p }}     
+            </div>
+            <div class="col">
+              <h5 class="text-muted">Actor Metrics</h5>
+                {{ ActorMetrics.as_p }}                     
+            </div>
+            <div class="col order-first"><h5 class="text-muted">Network Metrics</h5>
+                {{ NetworkMetrics.as_p }}
+            </div>
+
+        </div>
+
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Filtro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h5 class="text-muted">Métricas de Rede</h5>
+                            {{filtroNetworkMetrics.as_p}}
+                        </div>
+                        <div class="col-sm">
+                            <h5 class="text-muted">Métricas de Ator</h5>
+                            {{filtroActorsMetrics.as_p}}
+                        </div>
+                        <div class="col-sm">
+                            <h5 class="text-muted">Outras Informações</h5>
+                            {{filtroKnowledgeArea.as_p}}  
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Filter</button>
+                <button type="submit" class="btn btn-primary">Search</button> {% csrf_token %}
+        </div>
+    </form>
+    <br><br>
+    <div><h5>Quantidade de estudos retornados: {{counttitles}}</h5> </div>
+
+
+<br>
+<div class="row">
+
+<div class="container">
+
+  <div class="row ">
+
+    <div class=".col-">
+        {%if Titles == 'SCNAS'%}
+            <h6> {{Titles}}</h6><br>
+            {%for Title in listaTitles %}
+               <a class="badge badge-primary" data-toggle="tooltip" title="{{Title}}" >Title</a><br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+
+        {%if Actor == "Actor"%}
+            <h6>{{Actor}}</h6><br>
+            {%for ator in Atores %}       
+                {{ator}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%} 
+
+        {%if titulo == "SCNAS"%}
+            <h6>{{titulo}}</h6><br>
+            {%for Title in Titulos %}       
+                {{Title}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}        
+    </div> &nbsp;&nbsp;
+    <div class=".col-">
+        {%if Degree == "Degree Centrality "%}
+            <h6>{{Degree}}</h6><br>
+        {%endif%}        
+        {%for DC in DCs%}
+            {{DC}}<br><hr class="style1">
+        {%endfor%}
+        {%if Densidade == "Density"%}
+            <h6>{{Densidade}}</h6><br>
+        {%endif%}  
+         {%for Density in Densities%}
+            {{Density}}<br><hr class="style1">
+        {%endfor%}
+    </div>&nbsp;&nbsp;
+    <div class=".col-">
+        {%if Closeness == "Closeness Centrality "%}
+             <h6>{{Closeness}}</h6><br>
+             {%for CC in CCs%}
+            {{CC}}<br><hr class="style1">
+        {%endfor%}
+        {%endif%}        
+        
+        {%if Compo == "Component"%}
+             <h6>{{Compo}}</h6><br>
+             {%for componente in Componentes%}
+                {{componente}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}   
+        
+    </div>&nbsp;&nbsp;
+    <div class=".col-sm">
+        {%if Betweenness == "Betweenness Centrality "%}
+             <h6>{{Betweenness}}</h6><br>
+            {%for BC in BCs%}
+                {{BC}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}        
+        
+        {%if Averag == "Average Degree"%}
+            <h6>{{Averag}}</h6><br>
+            {%for AverageDegree in AverageDegrees%}
+                {{AverageDegree}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%} 
+        
+    </div> &nbsp;&nbsp;
+    <div class=".col-">
+        {%if Location == "Location"%}
+            <h6> {{Location}}</h6><br>
+            {%for region in Regions%}
+                {{region}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}   
+
+        {%for Location in Locations%}
+            {{Location}}<br><hr class="style1">
+        {%endfor%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+        {%if AN == 'Actors Number'%}
+            <h6> {{AN}}</h6><br>
+            {%for number in numerodeatores%}
+                {{number}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+        {%if EN == 'Edges Number'%}
+            <h6> {{EN}}</h6><br>
+            {%for number in numerodeedges%}
+                {{number}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+        {%if Inicio == 'Beginning'%}
+            <h6> {{Inicio}}</h6><br>
+            {%for init in listaAnoInicio%}
+               {{init}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+    <div class=".col-">
+        {%if Fim == 'End'%}
+            <h6> {{Fim}}</h6><br>
+            {%for init in listaAnoFim%}
+               {{init}}<br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+        {%if HEIInstitution == 'Institution'%}
+            <h6> {{HEIInstitution}}</h6><br>
+            {%for intitution in listaHEI %}
+               <a class="badge badge-primary" data-toggle="tooltip" title="{{intitution}}">HEI</a><br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+        {%if AC == 'Knowledge Area'%}
+            <h6> {{AC}}</h6><br>
+            {%for dominio in listaAC%}
+               <a class="badge badge-primary" data-toggle="tooltip" title="{{dominio}}" >Domain</a><br><hr class="style1">
+            {%endfor%}
+        {%endif%}
+    </div>&nbsp;&nbsp;
+
+    <div class=".col-">
+        {%if DOI == "DOI"%}
+             <h6>{{DOI}}</h6><br>
+            {%for URL in URLs%}
+                <a href="{{URL}}">link</a><br><hr class="style1">
+            {%endfor%}
+        {%endif%} 
+    </div>&nbsp;&nbsp;
+    <div class=".col-">
+        {%if DOI == "DOI"%}
+             <h6>PROV</h6><br>
+            {%for URL in URLs%}
+                <a href="{{URL}}">PROV</a><br><hr class="style1">
+            {%endfor%}
+        {%endif%} 
+    </div>
+
+  </div>
+</div>
+
+  
+</div>
+
+<script type="text/javascript">
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
