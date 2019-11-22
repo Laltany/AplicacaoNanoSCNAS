@@ -53,6 +53,8 @@ class PeriodicOther(forms.Form):
 class filtroPeriodic(forms.Form):
 	Knowledge_Area_Name = forms.CharField(required=False)
 	Periodic_Name = forms.CharField(required=False)
+	Network_Time_Begginning = forms.CharField(required=False)
+	Network_Time_End = forms.CharField(required=False)
 
 
 class EventOther(forms.Form):
@@ -64,6 +66,8 @@ class EventOther(forms.Form):
 class filtroEvent(forms.Form):
 	Knowledge_Area_Name = forms.CharField(required=False)
 	Event_Name = forms.CharField(required=False)
+	Network_Time_Begginning = forms.CharField(required=False)
+	Network_Time_End = forms.CharField(required=False)
 
 class InstitutionOther(forms.Form):
 	High_Education_Institution = forms.BooleanField(required=False)
@@ -75,6 +79,8 @@ class InstitutionOther(forms.Form):
 class filtroInstitution(forms.Form):
 	High_Education_Institution_Name = forms.CharField(required=False)
 	Region_Name = forms.CharField(required=False)
+	Network_Time_Begginning = forms.CharField(required=False)
+	Network_Time_End = forms.CharField(required=False)
 
 class PGPOther(forms.Form):
 	Knowledge_Area = forms.BooleanField(required=False)
@@ -88,11 +94,17 @@ class FiltroPGP(forms.Form):
 	Knowledge_Area_Name = forms.CharField(required=False)
 	HEI_Name = forms.CharField(required=False)
 	Region_Name= forms.CharField(required=False)
+	Network_Time_Begginning = forms.CharField(required=False)
+	Network_Time_End = forms.CharField(required=False)
 
 
 class GeographicOther(forms.Form):
 	Region = forms.BooleanField(required=False)
 	Network_Time = forms.BooleanField(required=False)
+	Actors_Number = forms.BooleanField(required=False)
+	Edges_Number = forms.BooleanField(required=False)	
 
 class FiltroGeographic(forms.Form):
 	Region_Name= forms.CharField(required=False)
+	Network_Time_Begginning = forms.CharField(required=False)
+	Network_Time_End = forms.CharField(required=False)

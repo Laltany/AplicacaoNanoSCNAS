@@ -91,10 +91,19 @@ WHERE{
 	counttitles = 0
 
 	if request.method == "POST":
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
 		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time_Begginning = request.POST['Network_Time_Begginning']
 			if Network_Time_Begginning:
-				anoinicial = ("?inicio time:year " +Network_Time_Begginning+".")
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
 				consulta+= ("""?assertion scnas:has_Network ?rede . 
 				?rede scnas:has_Time ?tempo.
  				?tempo time:hasBeginning ?inicio .""" + anoinicial )
@@ -384,7 +393,7 @@ WHERE{
 								listaEdgesNumber.append(result[var]['value'])
 
 
-	print(listaAnoFim)
+	print(consulta)
 
 	return render(request, "home.html", {'other':other, 'ActorMetrics': ActorMetrics, 'NetworkMetrics': NetworkMetrics, 'filtroKnowledgeArea':filtroKnowledgeArea, 'filtroNetworkMetrics': filtroNetworkMetrics, 'filtroActorsMetrics': filtroActorsMetrics, 'Atores': listaActor, 'DCs':listaDC, 'CCs':listaCC, 'BCs': listaBC, 'URLs': listaURL, 'Titulos': listaTitle, 'Densities': listaDensity, 'Componentes': listaComponentes, 'AverageDegrees': listaAverageDegree, "Regions": listaRegion, 
 	'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber, "AC": AC, "listaAC": listaAC, 'listaTitles': listaTitulos, "Titles":Titles, "counttitles":counttitles,'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim})
@@ -393,7 +402,7 @@ WHERE{
 def Periodic(request):
 
 	sparql = SPARQLWrapper("http://localhost:3030/SCNAS")
-	consulta = ("""
+	consulta= ("""
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
@@ -474,6 +483,23 @@ WHERE{
 	listaAnoFim=[]
 
 	if request.method == "POST":
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
+		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_Begginning = request.POST['Network_Time_Begginning']
+			if Network_Time_Begginning:
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasBeginning ?inicio .""" + anoinicial )
+
 
 		if 'Network_Time' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time = request.POST['Network_Time']
@@ -760,7 +786,7 @@ WHERE{
 
 
 
-
+			print(consulta)
 	return render(request, "periodic.html", {'PeriodicOther':PeriodicOther, 'ActorMetrics': ActorMetrics, 'NetworkMetrics': NetworkMetrics, 'filtroKnowledgeArea':filtroKnowledgeArea, 'filtroNetworkMetrics': filtroNetworkMetrics, 'filtroActorsMetrics': filtroActorsMetrics, 'filtroPeriodic':filtroPeriodic, 'Atores': listaActor, 'DCs':listaDC, 'CCs':listaCC, 'BCs': listaBC, 'URLs': listaURL, 'Titulos': listaTitle, 'Densities': listaDensity, 'Componentes': listaComponentes, 'AverageDegrees': listaAverageDegree, "Regions": listaRegion, 
 'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber, "AC": AC, "listaAC": listaAC, 'listaTitles': listaTitulos, "Titles":Titles, "counttitles":counttitles, 'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim})
 
@@ -853,6 +879,23 @@ WHERE{
 
 
 	if request.method == "POST":
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
+		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_Begginning = request.POST['Network_Time_Begginning']
+			if Network_Time_Begginning:
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasBeginning ?inicio .""" + anoinicial )
+
 
 		if 'Network_Time' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time = request.POST['Network_Time']
@@ -1135,7 +1178,7 @@ WHERE{
 								listaEdgesNumber.append(result[var]['value'])
 
 
-	print(listaAC)
+	print(consulta)
 
 	return render(request, "Event.html", {'EventOther':EventOther, 'filtroEvent':filtroEvent, 'ActorMetrics': ActorMetrics, 'NetworkMetrics': NetworkMetrics, 'filtroKnowledgeArea':filtroKnowledgeArea, 'filtroNetworkMetrics': filtroNetworkMetrics, 'filtroActorsMetrics': filtroActorsMetrics, 'filtroPeriodic':filtroPeriodic, 'Atores': listaActor, 'DCs':listaDC, 'CCs':listaCC, 'BCs': listaBC, 'URLs': listaURL, 'Titulos': listaTitle, 'Densities': listaDensity, 'Componentes': listaComponentes, 'AverageDegrees': listaAverageDegree, "Regions": listaRegion, 
 'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber, "listaAC": listaAC, "AC": AC, 'listaTitles': listaTitulos, "Titles":Titles, 'counttitles':counttitles, 'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim})
@@ -1232,6 +1275,23 @@ WHERE{
 
 
 	if request.method == "POST":
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
+		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_Begginning = request.POST['Network_Time_Begginning']
+			if Network_Time_Begginning:
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasBeginning ?inicio .""" + anoinicial )
+
 
 		if 'Network_Time' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time = request.POST['Network_Time']
@@ -1365,8 +1425,9 @@ WHERE{
  			Region = request.POST['Region']
  			if Region: 							
  				consulta += ("""
-				?rede scnas:has_Location ?location .
- 				?location SNAMetric:hasName ?NameLocation .""")
+				 ?type scnas:has_HEI ?HEI .
+				 ?HEI scnas:has_Location ?location .
+				 ?location SNAMetric:hasName ?nomeLocation .""")
 		if 'Degree_Centrality' in request.POST or 'Closeness_Centrality' in request.POST or 'Betweenness_Centrality' in request.POST:
 			consulta+=(" ?assertion scnas:has_Network ?rede .")	
 			Actor= "Actor"
@@ -1463,7 +1524,7 @@ WHERE{
 				if var == "URL":
 					DOI= "DOI"
 					listaURL.append(result[var]['value'])
-				if var == "NameLocation":
+				if var == "nomeLocation":
 					Location = "Location"
 					listaRegion.append(result[var]['value'])
 				if var == "title":
@@ -1522,9 +1583,10 @@ WHERE{
 							if var == "ValueEdgesNumber":
 								listaEdgesNumber.append(result[var]['value'])
 
+		print(listaRegion)
 
 	return render(request, "pgp.html", {'PGPOther':PGPOther, 'filtroInstitution':filtroInstitution, 'ActorMetrics': ActorMetrics, 'NetworkMetrics': NetworkMetrics, 'filtroKnowledgeArea':filtroKnowledgeArea, 'filtroNetworkMetrics': filtroNetworkMetrics, 'filtroActorsMetrics': filtroActorsMetrics, 'filtroPeriodic':filtroPeriodic, 'Atores': listaActor, 'DCs':listaDC, 'CCs':listaCC, 'BCs': listaBC, 'URLs': listaURL, 'Titulos': listaTitle, 'Densities': listaDensity, 'Componentes': listaComponentes, 'AverageDegrees': listaAverageDegree, "Regions": listaRegion, 
-'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber,'listaTitles': listaTitulos, "Titles":Titles, 'counttitles':counttitles, "listaAC": listaAC, "AC": AC, 'HEIInstitution': HEIInstitution, 'listaHEI':listaHEI, 'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim})
+'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber,'listaTitles': listaTitulos, "Titles":Titles, 'counttitles':counttitles, "listaAC": listaAC, "AC": AC, 'HEIInstitution': HEIInstitution, 'listaHEI':listaHEI, 'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim, "FiltroPGP":FiltroPGP})
 
 
 
@@ -1614,6 +1676,24 @@ WHERE{
 
 
 	if request.method == "POST":
+
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
+		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_Begginning = request.POST['Network_Time_Begginning']
+			if Network_Time_Begginning:
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasBeginning ?inicio .""" + anoinicial )
+
 
 		if 'Network_Time' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time = request.POST['Network_Time']
@@ -1904,7 +1984,7 @@ WHERE{
 								listaEdgesNumber.append(result[var]['value'])
 
 
-
+		print(consulta)
 
 	return render(request, "HEI.html", {'InstitutionOther':InstitutionOther, 'filtroInstitution':filtroInstitution, 'ActorMetrics': ActorMetrics, 'NetworkMetrics': NetworkMetrics, 'filtroKnowledgeArea':filtroKnowledgeArea, 'filtroNetworkMetrics': filtroNetworkMetrics, 'filtroActorsMetrics': filtroActorsMetrics, 'filtroPeriodic':filtroPeriodic, 'Atores': listaActor, 'DCs':listaDC, 'CCs':listaCC, 'BCs': listaBC, 'URLs': listaURL, 'Titulos': listaTitle, 'Densities': listaDensity, 'Componentes': listaComponentes, 'AverageDegrees': listaAverageDegree, "Regions": listaRegion, 
 'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber, "Institution": Institution, "listaInstitution":listaInstitution, 'listaTitles': listaTitulos, "Titles":Titles, 'counttitles':counttitles, 'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim })
@@ -1994,6 +2074,23 @@ WHERE{
 
 
 	if request.method == "POST":
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
+		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_Begginning = request.POST['Network_Time_Begginning']
+			if Network_Time_Begginning:
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasBeginning ?inicio .""" + anoinicial )
+
 
 		if 'Network_Time' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time = request.POST['Network_Time']
@@ -2391,6 +2488,23 @@ WHERE{
 
 
 	if request.method == "POST":
+
+		if 'Network_Time_End' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_End = request.POST['Network_Time_End']
+			if Network_Time_End:
+				anoFim = ("?Fim time:year '" +Network_Time_End+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasEnd ?Fim .""" + anoFim )
+
+		if 'Network_Time_Begginning' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
+			Network_Time_Begginning = request.POST['Network_Time_Begginning']
+			if Network_Time_Begginning:
+				anoinicial = ("?inicio time:year '" +Network_Time_Begginning+"'^^xsd:gYear.")
+				consulta+= ("""?assertion scnas:has_Network ?rede . 
+				?rede scnas:has_Time ?tempo.
+ 				?tempo time:hasBeginning ?inicio .""" + anoinicial )
+
 		if 'Network_Time' in request.POST: #verifica se Degree_Centrality foi enviado na requisição
 			Network_Time = request.POST['Network_Time']
 			if Network_Time:
@@ -2682,7 +2796,7 @@ WHERE{
 							EN= "Edges Number"
 							if var == "ValueEdgesNumber":
 								listaEdgesNumber.append(result[var]['value'])
-
+		print(consulta)
 
 	return render(request, "Geographic.html", {'GeographicOther':GeographicOther, 'ActorMetrics': ActorMetrics, 'NetworkMetrics': NetworkMetrics, 'FiltroGeographic':FiltroGeographic, 'filtroNetworkMetrics': filtroNetworkMetrics, 'filtroActorsMetrics': filtroActorsMetrics, 'Atores': listaActor, 'DCs':listaDC, 'CCs':listaCC, 'BCs': listaBC, 'URLs': listaURL, 'Titulos': listaTitle, 'Densities': listaDensity, 'Componentes': listaComponentes, 'AverageDegrees': listaAverageDegree, "Regions": listaRegion, 
 	'Location': Location, 'Betweenness': Betweenness, 'Closeness': Closeness, 'Degree': Degree, 'DOI': DOI, 'Locations': ListaLocation, 'Actor': Actor, 'Densidade':Densidade, 'titulo': titulo, 'Compo':Compo, 'Averag': Average, 'numerodeatores': listaActorsNumber, 'AN':AN, 'EN':EN, "numerodeedges": listaEdgesNumber, "AC": AC, "listaAC": listaAC, 'listaTitles': listaTitulos, "Titles":Titles, "counttitles":counttitles, 'listaAnoFim':listaAnoFim, 'listaAnoInicio':listaAnoInicio,'Inicio':Inicio, 'Fim': Fim })
